@@ -2,20 +2,20 @@ FROM ubuntu:14.04
 MAINTAINER TuRzAm
 
 # Var for first config
-ENV SESSIONNAME= "Ark Docker" \
-    SERVERMAP= "TheIsland" \
-    SERVERPASSWORD= "" \
-    ADMINPASSWORD= "adminpassword" \
-    NBPLAYERS= 70 \
-    UPDATEONSTART= 1 \
-    BACKUPONSTART= 1 \
-    GIT_TAG= v1.6.14 \
-    SERVERPORT= 27015 \
-    STEAMPORT= 7778 \
-    BACKUPONSTOP= 1 \
-    WARNONSTOP= 1 \
-    UID= 1000 \
-    GID= 1000
+ENV SESSIONNAME="Ark Docker" \
+    SERVERMAP="TheIsland" \
+    SERVERPASSWORD="" \
+    ADMINPASSWORD="adminpassword" \
+    NBPLAYERS=70 \
+    UPDATEONSTART=1 \
+    BACKUPONSTART=1 \
+    GIT_TAG=v1.6.14 \
+    SERVERPORT=27015 \
+    STEAMPORT=7778 \
+    BACKUPONSTOP=1 \
+    WARNONSTOP=1 \
+    UID=1000 \
+    GID=1000
 
 # Install dependencies 
 RUN apt-get update \
