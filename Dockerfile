@@ -28,7 +28,7 @@ RUN apt-get update \
 	--shell /bin/bash \ 
 	--gecos "" \ 
 	steam \
- && usermod -a -G sudo steam \
+ && usermod -a -G sudo steam
  
 # Copy & rights to folders
 COPY run.sh /home/steam/run.sh
