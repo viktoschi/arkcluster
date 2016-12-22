@@ -47,7 +47,7 @@ RUN touch /root/.bash_profile \
  && chmod +x install.sh \
  && ./install.sh steam \
  && ln -s /usr/local/bin/arkmanager /usr/bin/arkmanager \
- && chown steam -R /ark && chmod 755 -R /ark
+ && chown steam -R /ark && chmod 755 -R /ark \
  && mkdir /home/steam/steamcmd \ 
  && cd /home/steam/steamcmd \ 
  && curl http://media.steampowered.com/installer/steamcmd_linux.tar.gz | tar -vxz
