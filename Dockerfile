@@ -19,7 +19,8 @@ ENV SESSIONNAME="Ark Docker" \
 
 # Install dependencies 
 RUN apt-get update \
- && apt-get install -y curl lib32gcc1 lsof git ssh \
+ && apt-get upgrade -y \
+ && apt-get install -y sudo curl lib32gcc1 lsof git ssh bzip2 \
  && sed -i.bkp -e \
 	's/%sudo\s\+ALL=(ALL\(:ALL\)\?)\s\+ALL/%sudo ALL=NOPASSWD:ALL/g' /etc/sudoers \
 	/etc/sudoers \
