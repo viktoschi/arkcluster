@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM i386/ubuntu:16.04
 MAINTAINER TuRzAm
 
 # Var for first config
@@ -9,7 +9,7 @@ ENV SESSIONNAME="Ark Docker" \
     NBPLAYERS=70 \
     UPDATEONSTART=1 \
     BACKUPONSTART=1 \
-    GIT_TAG=v1.6.16 \
+    GIT_TAG=v1.6.24 \
     SERVERPORT=27015 \
     STEAMPORT=7778 \
     BACKUPONSTOP=1 \
@@ -20,16 +20,21 @@ ENV SESSIONNAME="Ark Docker" \
 # Install dependencies 
 RUN apt-get update \
  && apt-get upgrade -y \
- && apt-get install -y sudo curl lib32gcc1 lsof git ssh bzip2 \
+ && apt-get install -y sudo curl lsof git ssh bzip2 \
  && sed -i.bkp -e \
 	's/%sudo\s\+ALL=(ALL\(:ALL\)\?)\s\+ALL/%sudo ALL=NOPASSWD:ALL/g' /etc/sudoers \
 	/etc/sudoers \
- && adduser \ 
+ && apt-get clean \
+ && apt-get purge \
+ && groupadd -g $GID steam
+ && adduser \
+    --gid $GID \
+    --uid $UID \
+    --groups sudo \
 	--disabled-login \ 
 	--shell /bin/bash \ 
 	--gecos "" \ 
-	steam \
- && usermod -a -G sudo steam
+	steam
  
 # Copy & rights to folders
 COPY run.sh /home/steam/run.sh
@@ -41,9 +46,7 @@ RUN touch /root/.bash_profile \
  && chmod 777 /home/steam/run.sh \
  && chmod 777 /home/steam/user.sh \
  && mkdir /ark \
- && git clone https://github.com/FezVrasta/ark-server-tools.git /home/steam/ark-server-tools \
- && cd  /home/steam/ark-server-tools/ \
- && git checkout $GIT_TAG \
+ && git clone -b '$GIT_TAG' --single-branch --depth 1 https://github.com/FezVrasta/ark-server-tools.git /home/steam/ark-server-tools \
  && cd /home/steam/ark-server-tools/tools \
  && chmod +x install.sh \
  && ./install.sh steam \
