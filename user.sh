@@ -11,6 +11,14 @@ if [ ! "$(id -g steam)" -eq "$ARK_GID" ]; then
 	groupmod -o -g "$ARK_GID" steam ; 
 fi
 
+# Set Timezone
+if [ -f /usr/share/zoneinfo/${TZ} ]; then
+    echo "Setting timezone to '${TZ}'..."
+    ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime
+else
+    echo "Timezone '${TZ}' does not exist!"
+fi
+
 # Put steam owner of directories (if the uid changed, then it's needed)
 chown -R steam:steam /ark /home/steam
 
@@ -22,4 +30,4 @@ echo "Starting crond..."
 crond
 
 # Launch run.sh with user steam
-su steam -c /home/steam/run.sh
+su -p -c /home/steam/run.sh steam

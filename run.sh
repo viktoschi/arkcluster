@@ -21,14 +21,6 @@ function stop {
 	exit
 }
 
-# Set Timezone
-if [ -f /usr/share/zoneinfo/${TZ} ]; then
-    echo "Setting timezone to '${TZ}'..."
-    ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime
-else
-    echo "Timezone '${TZ}' does not exist!"
-fi
-
 # Change working directory to /ark to allow relative path
 cd /ark
 
@@ -63,7 +55,7 @@ fi
 
 # Installing crontab for user steam
 echo "Loading crontab..."
-crontab -u steam /ark/crontab
+echo /ark/crontab | crontab -
 
 # Launching ark server
 if [ $UPDATEONSTART -eq 0 ]; then
