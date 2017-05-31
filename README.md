@@ -7,8 +7,6 @@ This image uses [Ark Server Tools](https://github.com/FezVrasta/ark-server-tools
 *If you use an old volume, get the new arkmanager.cfg in the template directory.*  
 __Don't forget to use `docker pull boerngenschmidt/ark-docker` to get the latest version of the image__
 
-[ToC]
-
 ## Features
  - Easy install (no steamcmd / lib32... to install)
  - Use Ark Server Tools : update/install/start/backup/rcon/mods
@@ -92,7 +90,7 @@ To add mods, you only need to change the variable ark_GameModIds in *arkmanager.
 - Wait for ark to be downloaded installed and launched, then Ctrl+C to stop the server.
 - Edit */my/path/to/ark/GameUserSetting.ini and Game.ini*
 - Edit */my/path/to/ark/arkserver.cfg* to add mods and configure warning time.
-- Add auto update every day and autobackup by editing */my/path/to/ark/crontab*. [See](#Crontab---Job-automation)
+- Add auto update every day and autobackup by editing */my/path/to/ark/crontab*. [See](#crontab---job-automation)
 - Start the container `docker start ark`
 - Check your server with : `docker exec ark arkmanager status` 
 
