@@ -17,5 +17,9 @@ chown -R steam:steam /ark /home/steam
 # avoid error message when su -p (we need to read the /root/.bash_rc )
 chmod -R 777 /root/
 
-# Launch run.sh with user steam (-p allow to keep env variables)
+# Starting cron
+echo "Starting crond..."
+crond
+
+# Launch run.sh with user steam
 su steam -c /home/steam/run.sh

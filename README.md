@@ -96,7 +96,7 @@ To add mods, you only need to change the variable ark_GameModIds in *arkmanager.
 
 ### Docker-Compose
 - Modify [docker-compose.yml](docker-compose.yml)
-- run `docker-compose up`
+- run `docker-compose up -d ark`
 
 ## Variables
 + __SESSIONNAME__ : Name of your ark server (default : "Ark Docker")
