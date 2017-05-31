@@ -55,7 +55,7 @@ fi
 
 # Installing crontab for user steam
 echo "Loading crontab..."
-echo /ark/crontab | crontab -
+cat /ark/crontab | crontab -
 
 # Launching ark server
 if [ $UPDATEONSTART -eq 0 ]; then
