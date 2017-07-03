@@ -166,3 +166,6 @@ Currently none
   - renamed NBPLAYERS to MAX_PLAYERS
   - added prefixc ARK_ to UID & GID to not have conflicts with arkmanager
   - added auto upgrading of arkmanager
++ 1.5 :
+  - fixed arkmanager upgrade
+
