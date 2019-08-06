@@ -18,7 +18,7 @@ ENV SESSIONNAME="Ark Docker" \
     TZ=UTC
 
 ## Install dependencies
-RUN yum -y install glibc.i686 libstdc++.i686 git lsof bzip2 cronie perl-Compress-Zlib \
+RUN yum -y install glibc.x86_64 libstdc++.x86_64 git lsof bzip2 cronie perl-Compress-Zlib \
  && yum clean all \
  && adduser -u $ARK_UID -s /bin/bash -U steam
 
