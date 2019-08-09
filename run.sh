@@ -26,16 +26,20 @@ function stop {
     exit
 }
 
-# Change IDs
-groupmod -g $GROUP_ID steam
-usermod -u $USER_ID steam
+# Change the USER_ID if needed
+if [ ! "$(id -u steam)" -eq "$USER_ID" ]; then
+    echo "Changing steam uid to $USER_ID."
+    usermod -o -u "$USER_ID" steam ;
+fi
+# Change gid if needed
+if [ ! "$(id -g steam)" -eq "$GROUP_ID" ]; then
+    echo "Changing steam gid to $GROUP_ID."
+    groupmod -o -g "$GROUP_ID" steam ;
+fi
 
 [ ! -d /ark/log ] && mkdir /ark/log
 [ ! -d /ark/backup ] && mkdir /ark/backup
 [ ! -d /ark/staging ] && mkdir /ark/staging
-
-# Put steam owner of directories (if the uid changed, then it's needed)
-chown -R steam:steam /ark /home/steam
 
 if [ -f /usr/share/zoneinfo/${TZ} ]; then
     echo "Setting timezone to ${TZ} ..."
@@ -52,7 +56,13 @@ cp /home/steam/arkmanager-user.cfg /ark/default/arkmanager.cfg
 
 # Copy default arkmanager.cfg if it doesn't exist
 [ ! -f /ark/arkmanager.cfg ] && cp /home/steam/arkmanager-user.cfg /ark/arkmanager.cfg
+if [ ! -L /etc/arkmanager/instances/main.cfg ]; then
+    rm /etc/arkmanager/instances/main.cfg
+    ln -s /ark/arkmanager.cfg /etc/arkmanager/instances/main.cfg
+fi
 
+# Put steam owner of directories (if the uid changed, then it's needed)
+chown -R steam:steam /ark /home/steam
 echo "###########################################################################"
 
 if [ ! -d /ark/server  ] || [ ! -f /ark/server/version.txt ]; then
