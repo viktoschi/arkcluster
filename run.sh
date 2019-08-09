@@ -1,7 +1,12 @@
 #!/usr/bin/env bash
+source /etc/container_environment.sh
+
 echo "###########################################################################"
-echo "# Ark Server - " `date`
-echo "# UID $ARK_UID - GID $ARK_GID"
+echo "# Started  - `date`"
+echo "# Server   - ${SESSION_NAME}"
+echo "# Cluster  - ${CLUSTER_ID}"
+echo "# User     - ${USER_ID}"
+echo "# Group    - ${GROUP_ID}"
 echo "###########################################################################"
 [ -p /tmp/FIFO ] && rm /tmp/FIFO
 mkfifo /tmp/FIFO
@@ -9,64 +14,77 @@ mkfifo /tmp/FIFO
 export TERM=linux
 
 function stop {
-	if [ ${BACKUPONSTOP} -eq 1 ] && [ "$(ls -A server/ShooterGame/Saved/SavedArks)" ]; then
-		echo "[Backup on stop]"
-		arkmanager backup
-	fi
-	if [ ${WARNONSTOP} -eq 1 ];then 
-	    arkmanager stop --warn
-	else
-	    arkmanager stop
-	fi
-	exit
+    if [ ${BACKUPONSTOP} -eq 1 ] && [ "$(ls -A /ark/server/ShooterGame/Saved/SavedArks)" ]; then
+        echo "Creating Backup ..."
+        arkmanager backup
+    fi
+    if [ ${WARNONSTOP} -eq 1 ]; then
+        arkmanager stop --warn
+    else
+        arkmanager stop
+    fi
+    exit
 }
 
-# Change working directory to /ark to allow relative path
-cd /ark
+# Change IDs
+groupmod -g $GROUP_ID steam
+usermod -u $USER_ID steam
 
-# Add a template directory to store the last version of config file
-[ ! -d /ark/template ] && mkdir /ark/template
-# We overwrite the template file each time
-cp /home/steam/arkmanager.cfg /ark/template/arkmanager.cfg
-cp /home/steam/crontab /ark/template/crontab
-# Creating directory tree && symbolic link
-[ ! -f /ark/arkmanager.cfg ] && cp /home/steam/arkmanager.cfg /ark/arkmanager.cfg
 [ ! -d /ark/log ] && mkdir /ark/log
 [ ! -d /ark/backup ] && mkdir /ark/backup
 [ ! -d /ark/staging ] && mkdir /ark/staging
-[ ! -L /ark/Game.ini ] && ln -s server/ShooterGame/Saved/Config/LinuxServer/Game.ini Game.ini
-[ ! -L /ark/GameUserSettings.ini ] && ln -s server/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini GameUserSettings.ini
-[ ! -f /ark/crontab ] && cp /ark/template/crontab /ark/crontab
 
-if [ ! -d /ark/server  ] || [ ! -f /ark/server/version.txt ];then
-	echo "No game files found. Installing..."
-	mkdir -p /ark/server/ShooterGame/Saved/SavedArks
-	mkdir -p /ark/server/ShooterGame/Content/Mods
-	mkdir -p /ark/server/ShooterGame/Binaries/Linux/
-	touch /ark/server/ShooterGame/Binaries/Linux/ShooterGameServer
-	arkmanager install
-	# Create mod dir
-else
-	if [ ${BACKUPONSTART} -eq 1 ] && [ "$(ls -A server/ShooterGame/Saved/SavedArks/)" ]; then
-		echo "[Backup]"
-		arkmanager backup
-	fi
+# Put steam owner of directories (if the uid changed, then it's needed)
+chown -R steam:steam /ark /home/steam
+
+if [ -f /usr/share/zoneinfo/${TZ} ]; then
+    echo "Setting timezone to ${TZ} ..."
+    ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime
 fi
 
-# Installing crontab for user steam
-echo "Loading crontab..."
-cat /ark/crontab | crontab -
-
-# Launching ark server
-if [ $UPDATEONSTART -eq 0 ]; then
-	arkmanager start -noautoupdate
-else
-	arkmanager start
+if [ ! -f /etc/cron.d/upgrade-tools ]; then
+    echo "Adding update cronjob (${CRON_UPGRADE_TOOLS}) ..."
+    echo "$CRON_UPGRADE_TOOLS root /bin/bash yes | arkmanager upgrade-tools >> /ark/log/arkmanager-upgrade.log 2>&1" > /etc/cron.d/upgrade-tools
 fi
 
+# We overwrite the default file each time
+cp /home/steam/arkmanager-user.cfg /ark/default/arkmanager.cfg
+
+# Copy default arkmanager.cfg if it doesn't exist
+[ ! -f /ark/arkmanager.cfg ] && cp /home/steam/arkmanager-user.cfg /ark/arkmanager.cfg
+
+echo "###########################################################################"
+
+if [ ! -d /ark/server  ] || [ ! -f /ark/server/version.txt ]; then
+    echo "No game files found. Installing..."
+    mkdir -p /ark/server/ShooterGame/Saved/SavedArks
+    mkdir -p /ark/server/ShooterGame/Content/Mods
+    mkdir -p /ark/server/ShooterGame/Binaries/Linux
+    touch /ark/server/ShooterGame/Binaries/Linux/ShooterGameServer
+    chown -R steam:steam /ark/server
+    arkmanager install
+else
+    if [ ${BACKUPONSTART} -eq 1 ] && [ "$(ls -A /ark/server/ShooterGame/Saved/SavedArks/)" ]; then
+        echo "Creating Backup ..."
+        arkmanager backup
+    fi
+fi
+
+echo "###########################################################################"
+echo "Installing Mods ..."
+arkmanager installmods
+
+echo "###########################################################################"
+echo "Launching ark server ..."
+if [ ${UPDATEONSTART} -eq 1 ]; then
+    arkmanager start
+else
+    arkmanager start -noautoupdate
+fi
 
 # Stop server in case of signal INT or TERM
-echo "Waiting..."
+echo "###########################################################################"
+echo "Running ... (waiting for INT/TERM signal)"
 trap stop INT
 trap stop TERM
 
