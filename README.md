@@ -39,7 +39,7 @@ services:
       SERVERMAP: "TheIsland"
       SESSION_NAME: "ARK Cluster TheIsland"
       MAX_PLAYERS: 15
-      RCON_ENABLE: "False"
+      RCON_ENABLE: "True"
       RCON_PORT: 32330
       GAME_PORT: 7778
       QUERY_PORT: 27015
