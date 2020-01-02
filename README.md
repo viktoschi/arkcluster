@@ -27,7 +27,7 @@ services:
     deploy:
       mode: global
     environment:
-      CRON_UPGRADE_TOOLS: "* 3 * * Mon"
+      CRON_AUTO_UPDATE: "0 */3 * * *"
       UPDATEONSTART: 1
       BACKUPONSTART: 1
       BACKUPONSTOP: 1
@@ -65,7 +65,7 @@ services:
     deploy:
       mode: global
     environment:
-      CRON_UPGRADE_TOOLS: "* 3 * * Mon"
+      CRON_AUTO_UPDATE: "15 */3 * * *"
       UPDATEONSTART: 1
       BACKUPONSTART: 1
       BACKUPONSTOP: 1

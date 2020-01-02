@@ -49,8 +49,12 @@ if [ -f /usr/share/zoneinfo/${TZ} ]; then
 fi
 
 if [ ! -f /etc/cron.d/upgrade-tools ]; then
-    log "Adding update cronjob (${CRON_UPGRADE_TOOLS}) ..."
-    log "$CRON_UPGRADE_TOOLS root /bin/bash yes | arkmanager upgrade-tools >> /ark/log/arkmanager-upgrade.log 2>&1" > /etc/cron.d/upgrade-tools
+    echo "0 2 * * Mon root /bin/bash yes | arkmanager upgrade-tools >> /ark/log/arkmanager-upgrade.log 2>&1" > /etc/cron.d/upgrade-tools
+fi
+
+if [ ! -f /etc/cron.d/auto-update ]; then
+    log "Adding auto-update cronjob (${CRON_AUTO_UPDATE}) ..."
+    echo "$CRON_AUTO_UPDATE root /bin/bash arkmanager update --update-mods --ifempty >> /ark/log/ark-update.log 2>&1" > /etc/cron.d/auto-update
 fi
 
 # We overwrite the default file each time

@@ -8,7 +8,7 @@ LABEL org.label-schema.maintainer="Richard Kuhnt <r15ch13+git@gmail.com>" \
       org.label-schema.schema-version="1.0.0-rc1"
 
 # Expose environment variables
-ENV CRON_UPGRADE_TOOLS="* 3 * * Mon" \
+ENV CRON_AUTO_UPDATE="0 */3 * * *" \
     UPDATEONSTART=1 \
     BACKUPONSTART=1 \
     BACKUPONSTOP=1 \
