@@ -54,7 +54,7 @@ fi
 
 if [ ! -f /etc/cron.d/auto-update ]; then
     log "Adding auto-update cronjob (${CRON_AUTO_UPDATE}) ..."
-    echo "$CRON_AUTO_UPDATE root /bin/bash arkmanager update --update-mods --ifempty >> /ark/log/ark-update.log 2>&1" > /etc/cron.d/auto-update
+    echo "$CRON_AUTO_UPDATE root /usr/bin/arkmanager update --update-mods --warn --ifempty --saveworld --backup >> /ark/log/ark-update.log 2>&1" > /etc/cron.d/auto-update
 fi
 
 # We overwrite the default file each time
