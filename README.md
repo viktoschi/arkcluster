@@ -28,6 +28,7 @@ services:
       mode: global
     environment:
       CRON_AUTO_UPDATE: "0 */3 * * *"
+      CRON_AUTO_BACKUP: "0 */1 * * *"
       UPDATEONSTART: 1
       BACKUPONSTART: 1
       BACKUPONSTOP: 1
@@ -66,6 +67,7 @@ services:
       mode: global
     environment:
       CRON_AUTO_UPDATE: "15 */3 * * *"
+      CRON_AUTO_BACKUP: "15 */1 * * *"
       UPDATEONSTART: 1
       BACKUPONSTART: 1
       BACKUPONSTOP: 1
