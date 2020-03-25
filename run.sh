@@ -49,17 +49,17 @@ if [ -f /usr/share/zoneinfo/${TZ} ]; then
 fi
 
 if [ ! -f /etc/cron.d/upgradetools ]; then
-    echo "0 2 * * Mon root /bin/bash yes | arkmanager upgrade-tools >> /ark/log/arkmanager-upgrade.log 2>&1" > /etc/cron.d/upgradetools
+    echo "0 2 * * Mon root bash -l -c 'yes | arkmanager upgrade-tools >> /ark/log/arkmanager-upgrade.log 2>&1'" > /etc/cron.d/upgradetools
 fi
 
 if [ ! -f /etc/cron.d/arkupdate ]; then
     log "Adding update cronjob (${CRON_AUTO_UPDATE}) ..."
-    echo "$CRON_AUTO_UPDATE root /usr/bin/arkmanager update --update-mods --warn --ifempty --saveworld --backup >> /ark/log/ark-update.log 2>&1" > /etc/cron.d/arkupdate
+    echo "$CRON_AUTO_UPDATE steam bash -l -c 'arkmanager update --update-mods --warn --ifempty --saveworld --backup >> /ark/log/ark-update.log 2>&1'" > /etc/cron.d/arkupdate
 fi
 
 if [ ! -f /etc/cron.d/arkbackup ]; then
     log "Adding backup cronjob (${CRON_AUTO_BACKUP}) ..."
-    echo "$CRON_AUTO_BACKUP root /usr/bin/arkmanager backup >> /ark/log/ark-backup.log 2>&1" > /etc/cron.d/arkbackup
+    echo "$CRON_AUTO_BACKUP steam bash -l -c 'arkmanager backup >> /ark/log/ark-backup.log 2>&1'" > /etc/cron.d/arkbackup
 fi
 
 # We overwrite the default file each time
