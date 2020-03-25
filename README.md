@@ -36,7 +36,7 @@ services:
       USER_ID: 1000
       GROUP_ID: 1000
       TZ: "UTC"
-      MAX_BACKUP_SIZE: 1
+      MAX_BACKUP_SIZE: 500
       SERVERMAP: "TheIsland"
       SESSION_NAME: "ARK Cluster TheIsland"
       MAX_PLAYERS: 15
@@ -75,7 +75,7 @@ services:
       USER_ID: 1000
       GROUP_ID: 1000
       TZ: "UTC"
-      MAX_BACKUP_SIZE: 1
+      MAX_BACKUP_SIZE: 500
       SERVERMAP: "Valguero_P"
       SESSION_NAME: "ARK Cluster Valguero"
       MAX_PLAYERS: 15
