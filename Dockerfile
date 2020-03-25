@@ -9,6 +9,7 @@ LABEL org.label-schema.maintainer="Richard Kuhnt <r15ch13+git@gmail.com>" \
 
 # Expose environment variables
 ENV CRON_AUTO_UPDATE="0 */3 * * *" \
+    CRON_AUTO_BACKUP="0 */1 * * *" \
     UPDATEONSTART=1 \
     BACKUPONSTART=1 \
     BACKUPONSTOP=1 \
