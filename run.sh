@@ -73,7 +73,7 @@ if [ ! -L /etc/arkmanager/instances/main.cfg ]; then
 fi
 
 # Put steam owner of directories (if the uid changed, then it's needed)
-chown -R steam:steam /ark /home/steam
+chown -R steam:steam /ark /home/steam /cluster
 log "###########################################################################"
 
 if [ ! -d /ark/server  ] || [ ! -f /ark/server/version.txt ]; then
