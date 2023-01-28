@@ -47,7 +47,7 @@ RUN addgroup --gid $GROUP_ID steam \
     && usermod -a -G docker_env steam
 
 # Install ark-server-tools
-RUN git clone --single-branch --depth 1 https://github.com/FezVrasta/ark-server-tools.git /home/steam/ark-server-tools \
+RUN git clone --single-branch --depth 1 https://github.com/arkmanager/ark-server-tools.git /home/steam/ark-server-tools \
     && cd /home/steam/ark-server-tools/tools/ \
     && ./install.sh steam --bindir=/usr/bin
 

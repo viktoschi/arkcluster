@@ -1,4 +1,3 @@
-# https://github.com/r15ch13/arkcluster-base
 FROM r15ch13/arkcluster-base:latest
 
 LABEL org.label-schema.maintainer="Richard Kuhnt <r15ch13+git@gmail.com>" \

@@ -2,7 +2,7 @@
 
 Docker build for managing an __ARK: Survival Evolved__ server cluster.
 
-This image uses [Ark Server Tools](https://github.com/FezVrasta/ark-server-tools) to manage an ark server and is forked from [boerngen-schmidt/Ark-docker](https://hub.docker.com/r/boerngenschmidt/ark-docker/).
+This image uses [Ark Server Tools](https://github.com/arkmanager/ark-server-tools) to manage an ark server and is forked from [boerngen-schmidt/Ark-docker](https://hub.docker.com/r/boerngenschmidt/ark-docker/).
 
 *If you use an old volume, get the new arkmanager.cfg in the template directory.*
 
