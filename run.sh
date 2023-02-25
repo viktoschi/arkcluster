@@ -62,6 +62,11 @@ if [ ! -f /etc/cron.d/arkbackup ]; then
     echo "$CRON_AUTO_BACKUP steam bash -l -c 'arkmanager backup >> /ark/log/ark-backup.log 2>&1'" > /etc/cron.d/arkbackup
 fi
 
+if [ ! -f /etc/cron.d/arkdinowipe ]; then
+    log "Adding Dino Wipe cronjob (${CRON_DINO_WIPE}) ..."
+    echo "$CRON_DINO_WIPE steam bash -l -c 'arkmanager rconcmd "DestroyWildDinos"'" > /etc/cron.d/arkdinowipe
+fi 
+
 # We overwrite the default file each time
 cp /home/steam/arkmanager-user.cfg /ark/default/arkmanager.cfg
 
