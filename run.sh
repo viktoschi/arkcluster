@@ -65,6 +65,11 @@ fi
 if [ ! -f /etc/cron.d/arkdinowipe ]; then
     log "Adding Dino Wipe cronjob (${CRON_DINO_WIPE}) ..."
     echo "$CRON_DINO_WIPE steam bash -l -c 'arkmanager rconcmd "DestroyWildDinos"'" > /etc/cron.d/arkdinowipe
+fi
+
+if [ ! -f /etc/cron.d/arkrestart ]; then
+    log "Adding Restart cronjob (${CRON_RESTART}) ..."
+    echo "$CRON_RESTART steam bash -l -c 'arkmanager restart'" > /etc/cron.d/arkrestart
 fi 
 
 # We overwrite the default file each time
