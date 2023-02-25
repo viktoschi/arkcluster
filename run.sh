@@ -10,6 +10,7 @@ log "# Cluster  - ${CLUSTER_ID}"
 log "# User     - ${USER_ID}"
 log "# Group    - ${GROUP_ID}"
 log "###########################################################################"
+CLEAN_WEBHOOK=$(echo "${SESSION_NAME}" | tr -d "'")
 [ -p /tmp/FIFO ] && rm /tmp/FIFO
 mkfifo /tmp/FIFO
 
@@ -64,13 +65,13 @@ fi
 
 if [ ! -f /etc/cron.d/arkdinowipe ]; then
     log "Adding Dino Wipe cronjob (${CRON_DINO_WIPE}) ..."
-    echo "$CRON_DINO_WIPE steam curl -X POST -F "content=Cronjob Dino Wipe on ${SESSION_NAME}" "${WEBHOOK}"" > /etc/cron.d/hookarkdinowipe
+    echo "$CRON_DINO_WIPE steam curl -X POST -F "content=Cronjob Dino Wipe on ${CLEAN_WEBHOOK}" "${WEBHOOK}"" > /etc/cron.d/hookarkdinowipe
     echo "$CRON_DINO_WIPE steam bash -l -c 'arkmanager rconcmd 'DestroyWildDinos''" > /etc/cron.d/arkdinowipe
 fi
 
 if [ ! -f /etc/cron.d/arkrestart ]; then
     log "Adding Restart cronjob (${CRON_RESTART}) ..."
-    echo "$CRON_RESTART steam curl -X POST -F "content=Cronjob Restarting ${SESSION_NAME}" "${WEBHOOK}"" > /etc/cron.d/hookarkrestart
+    echo "$CRON_RESTART steam curl -X POST -F "content=Cronjob Restarting ${CLEAN_WEBHOOK}" "${WEBHOOK}"" > /etc/cron.d/hookarkrestart
     echo "$CRON_RESTART steam bash -l -c 'arkmanager restart'" > /etc/cron.d/arkrestart
 fi 
 
