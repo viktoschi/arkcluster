@@ -104,16 +104,15 @@ else
 fi
 
 log "###########################################################################"
-log "Installing Mods ..."
-arkmanager installmods
-
-log "###########################################################################"
 log "Launching ark server ..."
 curl -X POST -F "content=Launching ${SESSION_NAME}" "${WEBHOOK}"
 if [ ${UPDATEONSTART} -eq 1 ]; then
+    log "###########################################################################"
+    log "Installing Mods ..."
+    arkmanager installmods
     arkmanager start
 else
-    arkmanager start -noautoupdate
+    arkmanager start --noautoupdate
 fi
 
 # Stop server in case of signal INT or TERM
