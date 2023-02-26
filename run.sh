@@ -64,13 +64,13 @@ fi
 
 if [ ! -f /etc/cron.d/arkdinowipe ]; then
     log "Adding Dino Wipe cronjob (${CRON_DINO_WIPE}) ..."
-    echo "$CRON_DINO_WIPE steam curl -H "Content-Type: application/json" -d '{"username": "test", "content": "Dinowipe ${SERVERMAP}"}' ${WEBHOOK}" > /etc/cron.d/hookarkdinowipe
+    echo "$CRON_DINO_WIPE steam curl -H "Content-Type: application/json" -d '{"content": "Dinowipe ${SERVERMAP}"}' ${WEBHOOK}" > /etc/cron.d/hookarkdinowipe
     echo "$CRON_DINO_WIPE steam bash -l -c 'arkmanager rconcmd 'DestroyWildDinos''" > /etc/cron.d/arkdinowipe
 fi
 
 if [ ! -f /etc/cron.d/arkrestart ]; then
     log "Adding Restart cronjob (${CRON_RESTART}) ..."
-    echo "$CRON_RESTART steam curl -H "Content-Type: application/json" -d '{"username": "test", "content": "Restarting ${SERVERMAP}"}' ${WEBHOOK}" > /etc/cron.d/hookarkrestart
+    echo "$CRON_RESTART steam curl -H "Content-Type: application/json" -d '{"content": "Restarting ${SERVERMAP}"}' ${WEBHOOK}" > /etc/cron.d/hookarkrestart
     echo "$CRON_RESTART steam bash -l -c 'arkmanager restart'" > /etc/cron.d/arkrestart
 fi 
 
