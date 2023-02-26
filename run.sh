@@ -64,7 +64,7 @@ fi
 
 if [ ! -f /etc/cron.d/arkdinowipe ]; then
     log "Adding Dino Wipe cronjob (${CRON_DINO_WIPE}) ..."
-    echo "$CRON_DINO_WIPE steam curl -X POST -F "content=Dino Wipe ${SERVERMAP}" "${WEBHOOK}" > /etc/cron.d/hookarkdinowipe
+    echo "$CRON_DINO_WIPE steam curl -X POST -F "content=Dino Wipe ${SERVERMAP}" "${WEBHOOK}"" > /etc/cron.d/hookarkdinowipe
     echo "$CRON_DINO_WIPE steam bash -l -c 'arkmanager rconcmd 'DestroyWildDinos''" > /etc/cron.d/arkdinowipe
 fi
 
