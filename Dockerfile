@@ -37,6 +37,7 @@ RUN mkdir -p /ark \
 ENV CRON_AUTO_UPDATE="0 */3 * * *" \
     CRON_AUTO_BACKUP="0 */1 * * *" \
     UPDATEONSTART=1 \
+    UPDATEMODS=1 \
     BACKUPONSTART=1 \
     BACKUPONSTOP=1 \
     WARNONSTOP=1 \
